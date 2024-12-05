@@ -1,0 +1,19 @@
+{
+  "name": "web700-app",
+  "version": "1.0.0",
+  "description": "basic node.js and express server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nabin Chhetri",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

@@ -1,0 +1,136 @@
+<%- include('layouts/main') %>
+
+<div class="container">
+    <div class="row">
+        <main class="col-md-12">
+            <br>
+            <h1>HTML Demo</h1>
+            <br/>
+            <br/>
+            <section>
+                <h2>Tables</h2>
+                
+                <table class="table table-bordered mb-5">
+                    <caption>Table 1: Student Information</caption>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Program</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>001</td>
+                            <td>John Doe</td>
+                            <td rowspan="2">Computer Science</td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Jane Smith</td>
+                        </tr>
+                        <tr>
+                            <td>003</td>
+                            <td colspan="2">Alex Johnson - Business Administration</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Total Students: 3</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <table class="table table-striped">
+                    <caption>Table 2: Course Schedule</caption>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Wednesday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:00 AM</td>
+                            <td>Web Development</td>
+                            <td>Database Design</td>
+                            <td rowspan="2">Project Work</td>
+                        </tr>
+                        <tr>
+                            <td>11:00 AM</td>
+                            <td>JavaScript</td>
+                            <td>Node.js</td>
+                        </tr>
+                        <tr>
+                            <td>2:00 PM</td>
+                            <td colspan="3">Team Meeting</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p>This section demonstrates the use of HTML tables with various elements like caption, thead, tbody, tfoot, and properties like rowspan and colspan. The first table shows student information, while the second table displays a course schedule.</p>
+            </section>
+
+
+            <section>
+                <h2>Lists</h2>
+                <section>
+                    <h4>Ordered List of Tech Companies</h4>
+                    <ol>
+                        <li><a href="https://www.google.com">Google</a></li>
+                        <li><a href="https://www.amazon.com">Amazon</a></li>
+                        <li><a href="https://www.microsoft.com">Microsoft</a></li>
+                        <li><a href="https://www.apple.com">Apple</a></li>
+                        <li><a href="https://www.samsung.com">Samsung</a></li>
+                    </ol>
+                    <p>This section lists the ordered lists of Big Tech Companies.</p>
+                </section>
+
+                <section>
+                    <h4>Unordered List of Programming Languages</h4>
+                    <ul>
+                        <li>JavaScript</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>C#</li>
+                        <li>C++</li>
+                        <li>C</li>
+                        <li>PHP</li>
+                        <li>Swift</li>
+                    </ul>
+                    <p>This section lists the unordered lists of programming languages.</p>
+                </section>
+
+            <section>
+                <h2>Images</h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Snowboarder_in_halfpipe.jpg" alt="Placeholder image 1" class="img-fluid mb-3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Snowboarder_in_halfpipe.jpg" alt="Placeholder image 2" class="img-fluid mb-3">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Snowboarder_in_halfpipe.jpg" alt="Placeholder image 3" class="img-fluid mb-3">
+                <p>This section displays three images with alt text for accessibility.</p>
+            </section>
+
+            <section>
+                <h2>Audio</h2>
+                <audio controls>
+                    <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-audio.mp3" type="audio/mpeg">
+                    <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-audio.ogg" type="audio/ogg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p>This section demonstrates the use of the HTML5 audio player with multiple source files for cross-browser compatibility.</p>
+            </section>
+
+            <section>
+                <h2>Video</h2>
+                <video width="320" height="240" controls>
+                    <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.mp4" type="video/mp4">
+                    <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.ogg" type="video/ogg">
+                    <source src="https://pat-crawford-sdds.netlify.app/shared/fall-2021/web700/A3/sample-video.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                </video>
+                <p>This section showcases the HTML5 video player with multiple source files to ensure playback across different browsers.</p>
+            </section>
+        </main>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<%- include('layouts/main') %>
+
+<div class="container">
+  <div class="table-responsive col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Student Num</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Status</th>
+          <th>Course ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (students && students.length > 0) { %> <%
+        students.forEach(function(student) { %>
+        <tr>
+          <td><%= student.studentNum %></td>
+          <td>
+            <a href="/student/<%= student.studentNum %>"
+              ><%= student.firstName + ' ' + student.lastName %></a
+            >
+          </td>
+          <td>
+            <a href="mailto:<%= student.email %>"><%= student.email %></a>
+          </td>
+          <td>
+            <%= student.addressStreet + ',' + student.addressCity + ',' +
+            student.addressProvince %>
+          </td>
+          <td><%= student.status %></td>
+          <td>
+            <a href="/students?course=<%= student.course %>"
+              ><%= student.course %></a
+            >
+          </td>
+        </tr>
+        <% }); %> <% } else { %> <% } %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-12 text-center">
+    <strong><%= message %></strong>
+  </div>
+</div>
