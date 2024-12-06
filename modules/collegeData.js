@@ -34,7 +34,19 @@ const Student = sequelize.define("Student", {
   addressProvince: Sequelize.STRING,
   TA: Sequelize.BOOLEAN,
   status: Sequelize.STRING,
-});
+  course: Sequelize.STRING,
+  courseId: {
+    // Use courseId instead of course
+    type: Sequelize.INTEGER,
+    references: {
+      model: "Courses", // Reference the Courses table
+      key: "courseId", // Reference the courseId column in Courses
+    },
+  },
+}, {
+  createdAt: false,
+  updatedAt: false
+},);
 
 // Define the Course model
 const Course = sequelize.define("Course", {
@@ -45,10 +57,14 @@ const Course = sequelize.define("Course", {
   },
   courseCode: Sequelize.STRING,
   courseDescription: Sequelize.STRING,
+},{
+  createdAt: false,
+  updatedAt: false
 });
 
 // Course-Student relationship
-Course.hasMany(Student, { foreignKey: "course" });
+Course.hasMany(Student, { foreignKey: "courseId" });
+Student.belongsTo(Course, { foreignKey: "courseId" });
 
 function initialize() {
   return new Promise((resolve, reject) => {
@@ -69,17 +85,13 @@ function initialize() {
 function getAllStudents() {
   return new Promise(function (resolve, reject) {
     Student.findAll({
-      order: [["studentNum", "ASC"]], // Sort students by studentNum in ascending order
+      order: [["studentNum", "ASC"]],
     })
-      .then(function (data) {
-        if (data.length > 0) {
-          resolve(data); // Resolve with the list of students
-        } else {
-          reject("no results returned"); // Reject if no students are found
-        }
+      .then((data) => {
+        resolve(data);
       })
-      .catch(function () {
-        reject("no results returned"); // Reject if an error occurs
+      .catch(() => {
+        reject("no result returned");
       });
   });
 }
@@ -157,19 +169,14 @@ const getCourseById = (id) => {
 };
 
 // Add a new student record
-function addStudent(studentData) {
-  return new Promise(function (resolve, reject) {
-    // Ensure the TA property is explicitly set to true or false
-    studentData.TA = studentData.TA ? true : false; // use of ternary operator
-
-    // Replace any empty string values with null
+const addStudent = (studentData) => {
+  return new Promise((resolve, reject) => {
+    studentData.TA = studentData.TA ? true : false;
     for (const field in studentData) {
       if (studentData[field] === "") {
         studentData[field] = null;
       }
     }
-
-    // Use Sequelize's create method to add the student to the database
     Student.create({
       firstName: studentData.firstName,
       lastName: studentData.lastName,
@@ -181,17 +188,18 @@ function addStudent(studentData) {
       status: studentData.status,
       course: studentData.course,
     })
-      .then(function () {
-        resolve(); // Resolve the promise if the student is successfully created
+      .then(() => {
+        resolve();
       })
-      .catch(function () {
-        reject("unable to create student"); // Reject the promise if an error occurs
+      .catch((err) => {
+        console.log(err);
+        reject("unable to create student");
       });
   });
-}
+};
 
 // Update an existing student record
-const updateStudent = (studentData) => {
+function updateStudent (studentData) {
   return new Promise((resolve, reject) => {
     studentData.TA = studentData.TA ? true : false;
     for (const field in studentData) {
@@ -250,9 +258,9 @@ function addCourse(courseData) {
 // Update the course record
 const updateCourse = (courseData) => {
   return new Promise((resolve, reject) => {
-    for (const prop in courseData) {
-      if (courseData[prop] === "") {
-        courseData[prop] = null;
+    for (const field in courseData) {
+      if (courseData[field] === "") {
+        courseData[field] = null;
       }
     }
     Course.update(
@@ -292,6 +300,21 @@ const deleteCourseById = (id) => {
   });
 };
 
+// Delete student record by studentNum
+function deleteStudentByNum (studentNum)  {
+    return new Promise( function(resolve, reject) {
+      Student.destroy({
+        where: {
+          studentNum: studentNum
+        }
+      }).then(() => {
+        resolve();
+      }).catch(() => {
+        reject("Unable to delete the record");
+      })
+    });
+  };
+
 module.exports = {
   initialize,
   getAllStudents,
@@ -304,4 +327,5 @@ module.exports = {
   addCourse,
   updateCourse,
   deleteCourseById,
+  deleteStudentByNum
 };

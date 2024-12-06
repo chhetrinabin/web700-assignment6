@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
+            "previewLimit": 50,
+            "server": "ep-purple-snow-a5wigp5v.us-east-2.aws.neon.tech",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "web700",
+            "database": "web700_db",
+            "username": "web700_db_owner",
+            "password": "sWJYb5Il6yLB"
+        }
+    ]
+}

@@ -1,12 +1,10 @@
 <%- include('layouts/main') %>
 
 <div class="container">
-  <br>
-  <h2>Students 
-    <a href="/students/add" class="btn btn-primary float-right">Add New Student</a>
-  </h2>
-  <br>
   <div class="table-responsive col-md-12">
+    <br>
+      <h2>Students <a href="/students/add" class="btn btn-primary float-right">Add New Student</a></h2>
+      <hr>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -16,6 +14,7 @@
           <th>Address</th>
           <th>Status</th>
           <th>Course ID</th>
+          <th></th> <!-- Empty header for the "Remove" column -->
         </tr>
       </thead>
       <tbody>
@@ -40,6 +39,10 @@
             <a href="/students?course=<%= student.course %>"
               ><%= student.course %></a
             >
+          </td>
+          <td>
+            <!-- Remove button -->
+            <a href="/students/delete/<%= student.studentNum %>" class="btn btn-danger">Remove</a>
           </td>
         </tr>
         <% }); %> <% } else { %> <% } %>
