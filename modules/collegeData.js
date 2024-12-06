@@ -8,6 +8,7 @@ var sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
+    dialectModule: require('pg'),
     dialect: 'postgres',
     port: process.env.DB_PORT,
     dialectOptions: {
