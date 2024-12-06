@@ -50,7 +50,6 @@ const Course = sequelize.define("Course", {
 // Course-Student relationship
 Course.hasMany(Student, { foreignKey: "course" });
 
-
 function initialize() {
   return new Promise((resolve, reject) => {
     sequelize
@@ -227,6 +226,55 @@ const updateStudent = (studentData) => {
   });
 };
 
+// Add new course
+function addCourse(courseData) {
+  return new Promise((resolve, reject) => {
+    for (const field in courseData) {
+      if (courseData[field] === "") {
+        courseData[field] = null;
+      }
+    }
+    courseData.courseId = dataCollection.courses.length + 1;
+    dataCollection.courses.push(courseData);
+    resolve();
+  });
+}
+
+// Update course
+function updateCourse(courseData) {
+  return new Promise((resolve, reject) => {
+    for (const field in courseData) {
+      if (courseData[field] === "") {
+        courseData[field] = null;
+      }
+    }
+    const courseIndex = dataCollection.courses.findIndex(
+      (course) => course.courseId == courseData.courseId
+    );
+    if (courseIndex !== -1) {
+      dataCollection.courses[courseIndex] = courseData;
+      resolve();
+    } else {
+      reject(`Course with courseId ${courseData.courseId} not found.`);
+    }
+  });
+}
+
+// Delete course by ID
+function deleteCourseById(id) {
+  return new Promise((resolve, reject) => {
+    const courseIndex = dataCollection.courses.findIndex(
+      (course) => course.courseId == id
+    );
+    if (courseIndex !== -1) {
+      dataCollection.courses.splice(courseIndex, 1);
+      resolve();
+    } else {
+      reject(`Course with courseId ${id} not found.`);
+    }
+  });
+}
+
 module.exports = {
   initialize,
   getAllStudents,
@@ -236,4 +284,7 @@ module.exports = {
   getCourseById,
   addStudent,
   updateStudent,
+  addCourse,
+  updateCourse,
+  deleteCourseById,
 };
