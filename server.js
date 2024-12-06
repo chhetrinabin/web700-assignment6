@@ -75,6 +75,8 @@ app.locals.helpers = {
 // res.send("Hello World!");
 // });
 
+// *** Start of static pages ***
+
 // Update the "/" route to render "home.ejs"
 app.get("/", (req, res) => {
   res.render("home", { title: "Home Page | Nabin" });
@@ -87,6 +89,10 @@ app.get("/about", (req, res) => {
 app.get("/htmlDemo", (req, res) => {
   res.render("htmlDemo", { title: "htmlDemo Page | Nabin" });
 });
+
+// *** End of static pages ***
+
+// *** End of Students Routes ***
 
 // Adding "Get" route "/students/add"
 app.get("/students/add", (req, res) => {
@@ -136,26 +142,6 @@ app.get("/students", (req, res) => {
   }
 });
 
-app.get("/courses", (req, res) => {
-  collegeData
-    .getCourses() // Assuming this function fetches all courses
-    .then((courses) => {
-      res.render("courses", {
-        courses: courses,
-        title: "All courses",
-        message: "",
-      }); // Pass courses to the view
-    })
-    .catch((error) => {
-      res.render("courses", {
-        courses: [],
-        title: "All courses",
-        message: "no results returned",
-      }); // Handle error
-    });
-});
-
-
 // get a student by student number
 app.get("/student/:num", (req, res) => {
   const data = collegeData.getStudentByNum(req.params.num);
@@ -195,6 +181,29 @@ app.post("/student/update", (req, res) => {
     });
 });
 
+// *** End of Students Routes ***
+
+// *** Start of Courses Routes ***
+
+app.get("/courses", (req, res) => {
+  collegeData
+    .getCourses() // Assuming this function fetches all courses
+    .then((courses) => {
+      res.render("courses", {
+        courses: courses,
+        title: "All courses",
+        message: "",
+      }); // Pass courses to the view
+    })
+    .catch((error) => {
+      res.render("courses", {
+        courses: [],
+        title: "All courses",
+        message: "no results returned",
+      }); // Handle error
+    });
+});
+
 // Get a course by its id
 app.get("/course/:id", (req, res) => {
   collegeData
@@ -209,6 +218,47 @@ app.get("/course/:id", (req, res) => {
     .catch(() =>
       res.json({ title: "error", message: "query returned 0 results" })
     );
+});
+
+// Route to render the addCourse view
+app.get("/courses/add", (req, res) => {
+  res.render("addCourse", { title: "Add a Course", message: "" });
+});
+
+// Route to handle adding a new course
+app.post("/courses/add", (req, res) => {
+  collegeData
+    .addCourse(req.body)
+    .then(() => {
+      res.redirect("/courses");
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to add course");
+    });
+});
+
+// Update course record
+app.post("/course/update", (req, res) => {
+  collegeData
+    .updateCourse(req.body)
+    .then(() => {
+      res.redirect("/courses");
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to update course");
+    });
+});
+
+// Route to delete a course by ID
+app.get("/course/delete/:id", (req, res) => {
+  collegeData
+    .deleteCourseById(req.params.id)
+    .then(() => {
+      res.redirect("/courses");
+    })
+    .catch((err) => {
+      res.status(500).send("Unable to Remove Course / Course not found");
+    });
 });
 
 app.use((req, res) => {
