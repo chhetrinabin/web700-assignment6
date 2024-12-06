@@ -1,42 +1,43 @@
 <%- include('layouts/main') %>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <br>
-            <h2>Courses</h2>
-            <% if (courses && courses.length > 0) { %>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>S.N.</th>
-                                <th>Course Code</th>
-                                <th>Course Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% courses.forEach((course, index) => { %>
-                                <tr>
-                                    <td><%= index + 1 %></td>
-                                    <td>
-                                        <%= course.courseCode %>
-                                    </td>
-                                    <td>
-                                        <a href="/students?course=<%= course.courseId %>">
-                                            <%= course.courseDescription %>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
-                </div>
-            <% } else { %>
-                <div class="text-center">
-                    <strong><%= message %></strong>
-                </div>
-            <% } %>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <br />
+      <h2>
+        Courses <a href="/courses/add" class="btn btn-primary float-right">Add New Course</a>
+      </h2>
+      <br />
+      <% if (courses && courses.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.N.</th>
+              <th>Course Code</th>
+              <th>Course Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% courses.forEach((course, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= course.courseCode %></td>
+              <td>
+                <a href="/students?course=<%= course.courseId %>">
+                  <%= course.courseDescription %>
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <% } else { %>
+      <div class="text-center">
+        <strong><%= message %></strong>
+      </div>
+      <% } %>
     </div>
+  </div>
 </div>

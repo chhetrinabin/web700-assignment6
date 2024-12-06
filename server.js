@@ -6,7 +6,7 @@
  *
  * Name: Nabin Chhetri Student ID: 170439236  Date: Dec 04, 2024
  *
- * Online (Vercel) Link: 
+ * Online (Vercel) Link:
  *
  ********************************************************************************/
 
@@ -138,28 +138,30 @@ app.get("/students", (req, res) => {
 
 app.get("/courses", (req, res) => {
   collegeData
-    .getCourses()
-    .then((data) => {
-      // Render "courses.ejs" with the fetched data
+    .getCourses() // Assuming this function fetches all courses
+    .then((courses) => {
       res.render("courses", {
-        title: "All Courses | Nabin",
-        courses: data,
-      });
+        courses: courses,
+        title: "All courses",
+        message: "",
+      }); // Pass courses to the view
     })
-    .catch(() => {
-      // Render "courses.ejs" with a "no results" message
+    .catch((error) => {
       res.render("courses", {
-        title: "All Courses | Nabin",
-        message: "No results",
-      });
+        courses: [],
+        title: "All courses",
+        message: "no results returned",
+      }); // Handle error
     });
 });
 
+
 // get a student by student number
 app.get("/student/:num", (req, res) => {
-  const data = collegeData.getStudentByNum(req.params.num)
-    data.then((data) => {
-      res.render('student', {
+  const data = collegeData.getStudentByNum(req.params.num);
+  data
+    .then((data) => {
+      res.render("student", {
         title: `Info - ${data.firstName} ${data.lastName}`,
         student: data,
       });
@@ -167,7 +169,6 @@ app.get("/student/:num", (req, res) => {
     // handle no results
     .catch(() => res.json({ message: "no results" }));
 });
-
 
 // POST route to add a new student
 app.post("/students/add", (req, res) => {
@@ -199,16 +200,16 @@ app.get("/course/:id", (req, res) => {
   collegeData
     .getCourseById(req.params.id)
     .then((data) => {
-      res.render('course', {
+      res.render("course", {
         title: `Course Details - ${data.courseCode}`,
-        course: data
+        course: data,
       });
     })
     // handle no results
-    .catch(() => res.json({ title: "error",
-      message: "query returned 0 results" }));
+    .catch(() =>
+      res.json({ title: "error", message: "query returned 0 results" })
+    );
 });
-
 
 app.use((req, res) => {
   // handle 404 errors
