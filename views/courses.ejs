@@ -22,11 +22,16 @@
             <% courses.forEach((course, index) => { %>
             <tr>
               <td><%= index + 1 %></td>
-              <td><%= course.courseCode %></td>
+              <td>
+                <a href="/course/<%= course.courseId %>"><%= course.courseCode %></a>
+              </td>
               <td>
                 <a href="/students?course=<%= course.courseId %>">
                   <%= course.courseDescription %>
                 </a>
+              </td>
+              <td>
+                <a href="/course/delete/<%= course.courseId %>" class="btn btn-danger">Remove</a>
               </td>
             </tr>
             <% }) %>
@@ -35,7 +40,7 @@
       </div>
       <% } else { %>
       <div class="text-center">
-        <strong><%= message %></strong>
+        <strong>No Courses Found</strong>
       </div>
       <% } %>
     </div>

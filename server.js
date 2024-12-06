@@ -239,14 +239,7 @@ app.post("/courses/add", (req, res) => {
 
 // Update course record
 app.post("/course/update", (req, res) => {
-  collegeData
-    .updateCourse(req.body)
-    .then(() => {
-      res.redirect("/courses");
-    })
-    .catch((err) => {
-      res.status(500).send("Unable to update course");
-    });
+  collegeData.updateCourse(req.body).then(res.redirect("/courses"));
 });
 
 // Route to delete a course by ID

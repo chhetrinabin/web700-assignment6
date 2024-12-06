@@ -234,46 +234,63 @@ function addCourse(courseData) {
         courseData[field] = null;
       }
     }
-    courseData.courseId = dataCollection.courses.length + 1;
-    dataCollection.courses.push(courseData);
-    resolve();
+    Course.create({
+      courseCode: courseData.courseCode,
+      courseDescription: courseData.courseDescription,
+    })
+      .then(() => {
+        resolve();
+      })
+      .catch(() => {
+        reject("unable to create course");
+      });
   });
 }
 
-// Update course
-function updateCourse(courseData) {
+// Update the course record
+const updateCourse = (courseData) => {
   return new Promise((resolve, reject) => {
-    for (const field in courseData) {
-      if (courseData[field] === "") {
-        courseData[field] = null;
+    for (const prop in courseData) {
+      if (courseData[prop] === "") {
+        courseData[prop] = null;
       }
     }
-    const courseIndex = dataCollection.courses.findIndex(
-      (course) => course.courseId == courseData.courseId
-    );
-    if (courseIndex !== -1) {
-      dataCollection.courses[courseIndex] = courseData;
-      resolve();
-    } else {
-      reject(`Course with courseId ${courseData.courseId} not found.`);
-    }
+    Course.update(
+      {
+        courseCode: courseData.courseCode,
+        courseDescription: courseData.courseDescription,
+      },
+      {
+        where: {
+          courseId: courseData.courseId,
+        },
+      }
+    )
+      .then(() => {
+        resolve();
+      })
+      .catch(() => {
+        reject("unable to update course");
+      });
   });
-}
+};
 
-// Delete course by ID
-function deleteCourseById(id) {
+// Delete the course by its id
+const deleteCourseById = (id) => {
   return new Promise((resolve, reject) => {
-    const courseIndex = dataCollection.courses.findIndex(
-      (course) => course.courseId == id
-    );
-    if (courseIndex !== -1) {
-      dataCollection.courses.splice(courseIndex, 1);
-      resolve();
-    } else {
-      reject(`Course with courseId ${id} not found.`);
-    }
+    Course.destroy({
+      where: {
+        courseId: id,
+      },
+    })
+      .then(() => {
+        resolve();
+      })
+      .catch(() => {
+        reject();
+      });
   });
-}
+};
 
 module.exports = {
   initialize,

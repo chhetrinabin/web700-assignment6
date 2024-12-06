@@ -6,18 +6,18 @@
       <br />
       <h2><%= course.courseDescription %></h2>
       <hr />
-      <form>
+      <form action="/course/update" method="POST">
         <div class="row">
           <div class="col-md-3">
             <div class="form-group">
-              <label for="courseDescription">Course Code</label>
+              <label for="courseCode">Course Code</label>
               <input
                 class="form-control"
                 id="courseCode"
                 name="courseCode"
                 type="text"
-                readonly
                 value="<%= course.courseCode %>"
+                required
               />
             </div>
           </div>
@@ -29,14 +29,30 @@
                 id="courseDescription"
                 name="courseDescription"
                 type="text"
-                readonly
                 value="<%= course.courseDescription %>"
+                required
               />
             </div>
           </div>
         </div>
         <hr />
+        <input
+          type="hidden"
+          id="courseId"
+          name="courseId"
+          value="<%= course.courseId %>"
+        />
+        <input
+          type="submit"
+          class="btn btn-primary float-right"
+          value="Update Course"
+        /><br /><br /><br />
       </form>
     </div>
+    <% if (!course) { %>
+    <div class="col-md-12 text-center">
+      <strong><%= message %></strong>
+    </div>
+    <% } %>
   </div>
 </div>
