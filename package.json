@@ -16,7 +16,8 @@
 		"express": "^4.21.1",
 		"pg": "^8.13.1",
 		"pg-hstore": "^2.3.4",
-		"sequelize": "^6.37.5"
+		"sequelize": "^6.37.5",
+		"vercel": "^39.1.3"
 	},
 	"engines": {
 		"node": "22.x"
